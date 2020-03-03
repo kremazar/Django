@@ -1,0 +1,78 @@
+{% extends 'news/news_base.html' %}
+{% load thumbnail %}
+{% block content %}
+{% if news %}
+        <div class="container">
+            <div class="row">
+            
+                <!-- Blog start -->
+                
+                    <!-- Blog post start --> 
+                    <div class="post-content">
+                        <div class="post-header clearfix">
+                            <h2 class="post-title">
+                                <a>{{ news.title }}</a>
+                            </h2>
+                            <div class="post-meta mb-5">
+                                <span class="post-meta-author">Posted by <a href="#">  {{ news.author }}</a></span>
+                                <span class="post-meta-cats">in <a href="#">  {{ news.date }}</a></span>
+    
+                            </div><!-- post meta end -->
+                        </div><!-- post heading end -->
+                        <!-- {% for image in news.images.all %}  
+                        {% if forloop.first %} -->
+                        <div class="text-center">
+                                {% thumbnail news.get_first_image.photo "200x200" crop="center" as im %}
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"  >
+                                {% endthumbnail %}
+                        </div>
+                       
+                        <!-- {% endif %}
+                        {% endfor %}  -->
+                        <div class="entry-content">
+                            <p>{{ news.description|safe }}</p>
+                        </div>
+    
+                    </div><!-- Blog post end -->
+                
+                <!--/ Content col end -->
+            </div>
+            <!--/ row end -->
+        </div>
+        <!--/ container end -->
+{% else %}
+    <p>No polls are available.</p>
+{% endif %} 
+<section id="main-container" class="portfolio-static">
+	<div class="container">
+                <div class="text-center mb-5">
+                        <h3>Gallery: </h3>
+                </div>
+		<div class="row">
+                        {% for image in news.images.all %}   
+			<div class="col-sm-3 portfolio-static-item">
+                                        
+				<div class="grid">
+					{% thumbnail image.photo "200x200" crop="center" as im %}
+                                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" data-toggle="modal" data-target="#myModal{{image.id}}">
+                                        {% endthumbnail %}
+                                </div>
+                                <div id="myModal{{image.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content" style="height: 850px;width: 650px">
+                                        <div class="modal-body">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                </h5>
+                                        <img src="{{image.photo.url}}" class="img-responsive" style="height: 800px;width: 600px">
+                                        </div>
+                                </div>
+                                </div>
+                                </div>
+			<!--/ item 1 end -->
+                </div><!-- Content row end -->
+                {% endfor %}  
+	</div><!-- Container end -->
+</section><!-- Portfolio end -->
+{% endblock %}

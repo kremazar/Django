@@ -24,6 +24,7 @@ class News(models.Model):
         default='',
         editable=False,
     )
+    is_published=models.BooleanField(default=False)
     def get_first_image(self):
         return self.images.first()
 
@@ -41,8 +42,22 @@ class News(models.Model):
 class Category(models.Model):
     news = models.ForeignKey(News,default=1,on_delete=models.CASCADE, related_name='category')
     name = models.CharField(max_length=50)
+    slug = models.SlugField(
+        default='',
+        editable=False,
+    )
     def __unicode__(self):
         return self.name
+    def get_absolute_url(self):
+        kwargs = {
+            'pk': self.id,
+            'slug': self.slug
+        }
+        return reverse('article-pk-slug-detail', kwargs=kwargs)
+    def save(self, *args, **kwargs):
+        value = self.name
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
 
 
 class Img(models.Model):

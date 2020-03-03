@@ -1,9 +1,8 @@
 {% extends 'news/news_base.html' %}
 {% load custom_tags %}
-{% block title %}Home{% endblock %} 
+{% block title %}News{% endblock %} 
 {% block content %}
-
-
+{{category}}
         {% if news %}              
         {% for new in news %}
 
@@ -30,6 +29,11 @@
                                 {% for cat in new.category.all %}
                                 <span class="post-meta-cats">Category:  <a href="#">  {{ cat.name }}</a></span>
                                 {% endfor %}  
+                                {% if new.is_published == True %}
+                                <button>Publish</button>
+                                {% else %}  
+                                <button>Draft</button>
+                                {% endif %}
                                 
                             </div><!-- post meta end -->
                         </div><!-- post heading end -->

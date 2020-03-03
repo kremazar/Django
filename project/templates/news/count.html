@@ -1,19 +1,35 @@
-<h2 class="text-center">Top News: </h2>
-<div class="text-center">
-    {% for choice in choices %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-center mb-2">Top News: </h2>
+                {% for choice in choices %}
+                    <!-- Blog post start -->
+                    <div class="post-content">
+                        <div class="post-header clearfix">
+                            <h2 class="post-title">
+                                <a href="../news/{{ choice.id }}/">{{ choice.title }}</a>
+                            </h2>
+                            <div class="post-meta">
+                                <span class="post-meta-author">Posted by <a href="#">  {{ choice.author }}</a></span>
+                                <span class="post-meta-cats">in <a href="#">  {{ choice.date }}</a></span><br><br>
 
-        <!-- Blog post start -->
-        <div class="post-content">
-            <div class="post-header clearfix">
-                <h2 class="post-title">
-                    <a href="../news/{{ choice.id }}/">{{ choice.title }}</a>
-                </h2>
-                <div class="post-meta">
-                    <span class="post-meta-author">Posted by <a href="#">  {{ choice.author }}</a></span>
-                    <span class="post-meta-cats">in <a href="#">  {{ choice.date }}</a></span><br><br>
-
-                </div><!-- post meta end -->
-            </div><!-- post heading end -->
-      
-    {% endfor %}
-</div><!-- Blog post end -->    
+                            </div><!-- post meta end -->
+                        </div><!-- post heading end --> 
+                    </div><!-- Blog post end -->  
+                {% endfor %}
+          
+        </div>
+        <div class="col-6">
+            <h2 class="text-center mb-5">Categories: </h2>
+            {% for new in news %}
+                {% for cat in new.category.all %}
+                <div class="text-center">
+                    <h2 class="post-title">
+                        <a href="../news/{{ cat.name }}/">{{ cat.name }}</a>
+                    </h2>
+                </div>
+                {% endfor %}  
+            {% endfor %}
+        </div>
+    </div>
+</div>

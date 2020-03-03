@@ -1,12 +1,12 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import Http404
-from news.models import News,Img
+from news.models import News,Img,Category
 from django.views.generic import ListView
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.utils import timezone
-from cms.models.pagemodel import Page
+
 
 
 class NewsList(ListView):
@@ -37,3 +37,9 @@ def title(request, news_id, news_title):
                 'news2': news2,
               }
     return render(request, 'news/detail.html',context)
+
+def category(request,news_category):
+    news = News.objects.filter(category__slug=news_category)
+    context = {'news': news,
+              }
+    return render(request, 'news/news.html',context)

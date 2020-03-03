@@ -8,7 +8,8 @@ from ..models import News
 @register.inclusion_tag('news/count.html')
 def show_results():
       obj = News.objects.all().order_by('-date')[:4]
-      return {'choices': obj}
+      news = News.objects.all()
+      return {'choices': obj,'news':news}
     
 
 
